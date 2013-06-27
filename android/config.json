@@ -1,0 +1,10 @@
+{
+    "copyFiles": [
+        "OuyaPlugin.java"
+    ],
+    "libraries": [
+    ],
+    "jars": [
+        "ouya-sdk.jar"
+    ]
+}
