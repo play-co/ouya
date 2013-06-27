@@ -1,5 +1,6 @@
 package com.tealeaf.plugin.plugins;
 
+import tv.ouya.console.api.OuyaController;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -38,6 +39,7 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onCreate(Activity activity, Bundle savedInstanceState) {
+        OuyaController.init(activity);
     }
 
     public void onResume() {
@@ -61,6 +63,29 @@ public class OuyaPlugin implements IPlugin {
 
     public void setInstallReferrer(String referrer) {
 
+    }
+
+    public boolean onKeyDown(final int keyCode, KeyEvent event) {
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceid());
+        boolean handled = false;
+        
+        // switch(keyCode) -- handle input
+        
+        return handled || super.onKeyDown(keyCode, event);
+    }
+
+    public boolean onGenericMotionEvent(final MotionEvent event) {
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceid());
+        float LS_X = event.getAxisValue(OuyaController.AXIS_LS_X);
+        float LS_Y = event.getAxisValue(OuyaController.AXIS_LS_Y);
+        float RS_X = event.getAxisValue(OuyaController.AXIS_RS_X);
+        float RS_Y = event.getAxisValue(OuyaController.AXIS_RS_Y);
+        float L2 = event.getAxisValue(OuyaController.AXIS_L2);
+        float R2 - event.getAxisValue(OuyaController.AXIS_R2);
+        
+        // crunch input
+        
+        return true;
     }
 
     public void onActivityResult(Integer request, Integer result, Intent data) {
