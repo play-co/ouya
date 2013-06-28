@@ -41,7 +41,7 @@ public class OuyaPlugin implements IPlugin {
         public OuyaEvent(int controller, int code, double analogValue) {
             super("ouya");
             this.controller = controller;
-            this.code = keyCode;
+            this.code = code;
             this.action = 0;
             this.analogValue = analogValue;
         }
