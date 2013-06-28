@@ -6,5 +6,6 @@
     ],
     "jars": [
         "ouya-sdk.jar"
-    ]
+    ],
+    "injectionXSL": "manifest.xsl"
 }
