@@ -4,6 +4,8 @@ import tv.ouya.console.api.OuyaController;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import com.tealeaf.EventQueue;
+import com.tealeaf.event.PluginEvent;
 import com.tealeaf.logger;
 import com.tealeaf.TeaLeaf;
 import com.tealeaf.plugin.IPlugin;
@@ -28,7 +30,29 @@ import java.util.Iterator;
 
 
 public class OuyaPlugin implements IPlugin {
-    Activity activity;
+
+    public class OuyaEvent extends com.tealeaf.event.PluginEvent {
+        int controller;
+        int keyCode;
+        int keyAction;
+        double analogValue;
+
+        public OuyaEvent(int controller, int keyCode, int keyAction, double analogValue) {
+            super("ouya");
+            this.controller = controller;
+            this.keyCode = keyCode;
+            this.keyAction = keyAction;
+            this.analogValue = analogValue;
+        }
+
+        public OuyaEvent(int controller, int keyCode, int keyAction) {
+            super("ouya");
+            this.controller = controller;
+            this.keyCode = keyCode;
+            this.keyAction = keyAction;
+            this.analogValue = null;
+        }
+    }
 
     public OuyaPlugin() {
 
@@ -67,11 +91,8 @@ public class OuyaPlugin implements IPlugin {
 
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceid());
-        boolean handled = false;
-        
-        // switch(keyCode) -- handle input
-        
-        return handled || super.onKeyDown(keyCode, event);
+        EventQueue.pushEvent(new OuyaEvent(player, keyCode, event.getAction())); 
+        return true;
     }
 
     public boolean onGenericMotionEvent(final MotionEvent event) {
@@ -81,10 +102,8 @@ public class OuyaPlugin implements IPlugin {
         float RS_X = event.getAxisValue(OuyaController.AXIS_RS_X);
         float RS_Y = event.getAxisValue(OuyaController.AXIS_RS_Y);
         float L2 = event.getAxisValue(OuyaController.AXIS_L2);
-        float R2 - event.getAxisValue(OuyaController.AXIS_R2);
-        
-        // crunch input
-        
+        float R2 = event.getAxisValue(OuyaController.AXIS_R2);
+        //EventQueue.pushEvent(new OuyaEvent(player, 
         return true;
     }
 
