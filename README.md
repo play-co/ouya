@@ -27,9 +27,17 @@ ouya.onControllerInput = function(evt) {
 	
 	// Do something with evt. It has these properties:
 	//  - controller (integer - source of event)
-	//  - code (integer - button pressed)
-	//  - action (integer - ouya.ACTION_ANALOG, ouya.ACTION_DOWN, or ouya.ACTION_UP)
+	//  - code (integer - button pressed, one of: BUTTON or AXIS constants)
+	//  - action (integer - type of input, one of: ACTION_ANALOG, ACTION_DOWN, or ACTION_UP)
 	//  - analogValue (float - value of analog motion)
+	
+	logger.log("input received from controller", evt.controller);
+	if (evt.action) { // digital event -- ACTION_DOWN or ACTION_UP
+		logger.log("digital input - keyCode", evt.code, "with action",
+			evt.action == ouya.ACTION_DOWN ? "DOWN" : "UP");
+	} else { // analog event -- ACTION_ANALOG
+		logger.log("analog input - keyCode", evt.code, "with value", evt.analogValue);
+	}
 	
 };
 ~~~
