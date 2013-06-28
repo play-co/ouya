@@ -37,11 +37,11 @@ public class OuyaPlugin implements IPlugin {
         int keyAction;
         double analogValue;
 
-        public OuyaEvent(int controller, int keyCode, int keyAction, double analogValue) {
+        public OuyaEvent(int controller, int keyCode, double analogValue) {
             super("ouya");
             this.controller = controller;
             this.keyCode = keyCode;
-            this.keyAction = keyAction;
+            this.keyAction = null;
             this.analogValue = analogValue;
         }
 
@@ -103,7 +103,12 @@ public class OuyaPlugin implements IPlugin {
         float RS_Y = event.getAxisValue(OuyaController.AXIS_RS_Y);
         float L2 = event.getAxisValue(OuyaController.AXIS_L2);
         float R2 = event.getAxisValue(OuyaController.AXIS_R2);
-        //EventQueue.pushEvent(new OuyaEvent(player, 
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_LS_X, LS_X));
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_LS_Y, LS_Y));
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_RS_X, RS_X));
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_RS_Y, RS_Y));
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_L2, L2));
+        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_R2, R2));
         return true;
     }
 
