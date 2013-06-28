@@ -27,7 +27,8 @@ import android.content.SharedPreferences;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
-
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 public class OuyaPlugin implements IPlugin {
 
@@ -41,7 +42,7 @@ public class OuyaPlugin implements IPlugin {
             super("ouya");
             this.controller = controller;
             this.keyCode = keyCode;
-            this.keyAction = null;
+            this.keyAction = 0;
             this.analogValue = analogValue;
         }
 
@@ -50,7 +51,7 @@ public class OuyaPlugin implements IPlugin {
             this.controller = controller;
             this.keyCode = keyCode;
             this.keyAction = keyAction;
-            this.analogValue = null;
+            this.analogValue = 0;
         }
     }
 
@@ -90,13 +91,13 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
-        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceid());
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
         EventQueue.pushEvent(new OuyaEvent(player, keyCode, event.getAction())); 
         return true;
     }
 
     public boolean onGenericMotionEvent(final MotionEvent event) {
-        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceid());
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
         float LS_X = event.getAxisValue(OuyaController.AXIS_LS_X);
         float LS_Y = event.getAxisValue(OuyaController.AXIS_LS_Y);
         float RS_X = event.getAxisValue(OuyaController.AXIS_RS_X);
