@@ -4,4 +4,6 @@ GLOBAL.ouya = {
 	}
 };
 
-NATIVE.events.registerHandler('ouya', bind(ouya, 'onControllerInput'));
+NATIVE.events.registerHandler('ouya', function(evt) {
+	ouya.onControllerInput(evt);
+});
