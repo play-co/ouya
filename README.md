@@ -20,6 +20,20 @@ To use the OUYA controller in your game, install the plugin at the top of Applic
 import plugins.ouya.install;
 ~~~
 
+By default `ouya.onControllerInput` will log out input events. You can override it like this:
+
+~~~
+ouya.onControllerInput = function(evt) {
+	
+	// Do something with evt. It has these properties:
+	//  - controller (integer - source of event)
+	//  - code (integer - button pressed)
+	//  - action (integer - ouya.ACTION_ANALOG, ouya.ACTION_DOWN, or ouya.ACTION_UP)
+	//  - analogValue (float - value of analog motion)
+	
+};
+~~~
+
 ## Testing
 
 To test for successful integration, build your game:

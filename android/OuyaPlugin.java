@@ -34,23 +34,23 @@ public class OuyaPlugin implements IPlugin {
 
     public class OuyaEvent extends com.tealeaf.event.PluginEvent {
         int controller;
-        int keyCode;
-        int keyAction;
+        int code;
+        int action;
         double analogValue;
 
-        public OuyaEvent(int controller, int keyCode, double analogValue) {
+        public OuyaEvent(int controller, int code, double analogValue) {
             super("ouya");
             this.controller = controller;
-            this.keyCode = keyCode;
-            this.keyAction = 0;
+            this.code = keyCode;
+            this.action = 0;
             this.analogValue = analogValue;
         }
 
-        public OuyaEvent(int controller, int keyCode, int keyAction) {
+        public OuyaEvent(int controller, int code, int action) {
             super("ouya");
             this.controller = controller;
-            this.keyCode = keyCode;
-            this.keyAction = keyAction;
+            this.code = code;
+            this.action = action;
             this.analogValue = 0;
         }
     }
@@ -92,7 +92,13 @@ public class OuyaPlugin implements IPlugin {
 
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        EventQueue.pushEvent(new OuyaEvent(player, keyCode, event.getAction())); 
+        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 1)); 
+        return true;
+    }
+
+    public boolean onKeyUp(final int keyCode, KeyEvent event) {
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
+        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 2)); 
         return true;
     }
 
