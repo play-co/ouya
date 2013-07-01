@@ -1,8 +1,10 @@
 GLOBAL.ouya = {
-	onControllerInput: function(evt) {
-		logger.log("got OUYA event", JSON.stringify(evt));
+	onDigitalInput: function(evt) {
+		logger.log("got OUYA digital event", JSON.stringify(evt));
 	},
-	ACTION_ANALOG: 0,
+	onAnalogInput: function(evt) {
+		logger.log("got OUYA analog event", JSON.stringify(evt));
+	},
 	ACTION_DOWN: 1,
 	ACTION_UP: 2,
 	BUTTON_O: 96,
@@ -28,6 +30,10 @@ GLOBAL.ouya = {
 	AXIS_RIGHT_TRIGGER: 5
 };
 
-NATIVE.events.registerHandler('ouya', function(evt) {
-	ouya.onControllerInput(evt);
+NATIVE.events.registerHandler('ouyakey', function(evt) {
+	ouya.onDigitalInput(evt);
+});
+
+NATIVE.events.registerHandler('ouyamotion', function(evt) {
+	ouya.onAnalogInput(evt);
 });

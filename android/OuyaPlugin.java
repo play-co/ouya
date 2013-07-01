@@ -32,26 +32,30 @@ import android.view.MotionEvent;
 
 public class OuyaPlugin implements IPlugin {
 
-    public class OuyaEvent extends com.tealeaf.event.PluginEvent {
-        int controller;
-        int code;
-        int action;
-        double analogValue;
+    public class OuyaKeyEvent extends com.tealeaf.event.PluginEvent {
+        int player, code, action;
 
-        public OuyaEvent(int controller, int code, double analogValue) {
-            super("ouya");
-            this.controller = controller;
-            this.code = code;
-            this.action = 0;
-            this.analogValue = analogValue;
-        }
-
-        public OuyaEvent(int controller, int code, int action) {
-            super("ouya");
-            this.controller = controller;
+        public OuyaKeyEvent(int player, int code, int action) {
+            super("ouyakey");
+            this.player = player;
             this.code = code;
             this.action = action;
-            this.analogValue = 0;
+        }
+    }
+
+    public class OuyaMotionEvent extends com.tealeaf.event.PluginEvent {
+        int player;
+        float lsx, lsy, rsx, rsy, l2, r2;
+
+        public OuyaMotionEvent(int player, float lsx, float lsy, float rsx, float rsy, float l2, float r2) {
+            super("ouyamotion");
+            this.player = player;
+            this.lsx = lsx;
+            this.lsy = lsy;
+            this.rsx = rsx;
+            this.rsy = rsy;
+            this.l2 = l2;
+            this.r2 = r2;
         }
     }
 
@@ -64,6 +68,7 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onCreate(Activity activity, Bundle savedInstanceState) {
+        logger.log("MAR ON CREATE");
         OuyaController.init(activity);
     }
 
@@ -91,31 +96,30 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
+        logger.log("MAR KEY DOWN");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 1)); 
+        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 1));
         return true;
     }
 
     public boolean onKeyUp(final int keyCode, KeyEvent event) {
+        logger.log("MAR KEY UP");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 2)); 
+        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 2));
         return true;
     }
 
     public boolean onGenericMotionEvent(final MotionEvent event) {
-        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        float LS_X = event.getAxisValue(OuyaController.AXIS_LS_X);
-        float LS_Y = event.getAxisValue(OuyaController.AXIS_LS_Y);
-        float RS_X = event.getAxisValue(OuyaController.AXIS_RS_X);
-        float RS_Y = event.getAxisValue(OuyaController.AXIS_RS_Y);
-        float L2 = event.getAxisValue(OuyaController.AXIS_L2);
-        float R2 = event.getAxisValue(OuyaController.AXIS_R2);
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_LS_X, LS_X));
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_LS_Y, LS_Y));
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_RS_X, RS_X));
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_RS_Y, RS_Y));
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_L2, L2));
-        EventQueue.pushEvent(new OuyaEvent(player, OuyaController.AXIS_R2, R2));
+        logger.log("MAR MOTION");
+        EventQueue.pushEvent(new OuyaEvent(
+            OuyaController.getPlayerNumByDeviceId(event.getDeviceId()),
+            event.getAxisValue(OuyaController.AXIS_LS_X),
+            event.getAxisValue(OuyaController.AXIS_LS_Y),
+            event.getAxisValue(OuyaController.AXIS_RS_X),
+            event.getAxisValue(OuyaController.AXIS_RS_Y),
+            event.getAxisValue(OuyaController.AXIS_L2),
+            event.getAxisValue(OuyaController.AXIS_R2)
+        ));
         return true;
     }
 

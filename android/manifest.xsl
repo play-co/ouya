@@ -4,7 +4,7 @@
 		<xsl:copy>
 			<xsl:call-template name="copy-children"/>
 			<xsl:element name="category">
-				<xsl:attribute name="android:name">tv.ouya.intent.category.GAME</xsl:attribute>
+				<xsl:attribute name="android:name">ouya.intent.category.GAME</xsl:attribute>
 			</xsl:element>
 		</xsl:copy>
 	</xsl:template>
