@@ -1,7 +1,6 @@
 {
     "copyFiles": [
-        "OuyaPlugin.java",
-        "OuyaActivity.java"
+        "OuyaPlugin.java"
     ],
     "libraries": [
     ],
