@@ -1,32 +1,15 @@
 package com.tealeaf.plugin.plugins;
 
 import tv.ouya.console.api.OuyaController;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import com.tealeaf.EventQueue;
 import com.tealeaf.event.PluginEvent;
 import com.tealeaf.logger;
-import com.tealeaf.TeaLeaf;
 import com.tealeaf.plugin.IPlugin;
 import java.io.*;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import com.tealeaf.util.HTTP;
-import java.net.URI;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
-import android.util.Log;
 import android.os.Bundle;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.SharedPreferences;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Iterator;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -60,11 +43,9 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public OuyaPlugin() {
-
     }
 
     public void onCreateApplication(Context applicationContext) {
-
     }
 
     public void onCreate(Activity activity, Bundle savedInstanceState) {
@@ -88,30 +69,28 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onNewIntent(Intent intent) {
-
     }
 
     public void setInstallReferrer(String referrer) {
-
     }
 
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
         logger.log("MAR KEY DOWN");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 1));
+        EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 1));
         return true;
     }
 
     public boolean onKeyUp(final int keyCode, KeyEvent event) {
         logger.log("MAR KEY UP");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-        EventQueue.pushEvent(new OuyaEvent(player, keyCode, 2));
+        EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 2));
         return true;
     }
 
     public boolean onGenericMotionEvent(final MotionEvent event) {
         logger.log("MAR MOTION");
-        EventQueue.pushEvent(new OuyaEvent(
+        EventQueue.pushEvent(new OuyaMotionEvent(
             OuyaController.getPlayerNumByDeviceId(event.getDeviceId()),
             event.getAxisValue(OuyaController.AXIS_LS_X),
             event.getAxisValue(OuyaController.AXIS_LS_Y),
@@ -124,7 +103,6 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onActivityResult(Integer request, Integer result, Intent data) {
-
     }
 
     public boolean consumeOnBackPressed() {
@@ -133,5 +111,4 @@ public class OuyaPlugin implements IPlugin {
 
     public void onBackPressed() {
     }
-
 }
