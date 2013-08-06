@@ -7,30 +7,42 @@ var Ouya = Class(function () {
 		logger.log("got OUYA analog event", JSON.stringify(evt));
 	},
 
-	this.CODE = {
-		ACTION_DOWN: 1,
-		ACTION_UP: 2,
-		BUTTON_O: 96,
-		BUTTON_U: 99,
-		BUTTON_Y: 100,
-		BUTTON_A: 97,
-		BUTTON_MENU: 82,
-		BUTTON_DPAD_UP: 19,
-		BUTTON_DPAD_DOWN: 20,
-		BUTTON_DPAD_RIGHT: 22,
-		BUTTON_DPAD_LEFT: 21,
-		BUTTON_L1: 104,
-		BUTTON_L2: 102,
-		BUTTON_L3: 106,
-		BUTTON_R1: 105,
-		BUTTON_R2: 103,
-		BUTTON_R3: 107,
-		AXIS_LEFT_X: 0,
-		AXIS_LEFT_Y: 1,
-		AXIS_LEFT_TRIGGER: 2,
-		AXIS_RIGHT_X: 3,
-		AXIS_RIGHT_Y: 4,
-		AXIS_RIGHT_TRIGGER: 5
+	this.ACTION = {
+		DOWN: 1,
+		UP: 2
+	};
+
+	this.BUTTON = {
+		O: 96,
+		U: 99,
+		Y: 100,
+		A: 97,
+		MENU: 82,
+		DPAD: {
+			UP: 19,
+			DOWN: 20,
+			RIGHT: 22,
+			LEFT: 21
+		},
+		L1: 104,
+		L2: 102,
+		L3: 106,
+		R1: 105,
+		R2: 103,
+		R3: 107
+	};
+
+	this.AXIS = {
+		LEFT: {
+			X: 0,
+			Y: 1,
+			TRIGGER: 2
+		},
+		RIGHT: {
+			X: 3,
+			Y: 4,
+			TRIGGER: 5
+		}
 	};
 
 	this.init = function() {
