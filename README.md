@@ -94,9 +94,9 @@ ouya.onAnalogInput = function(evt) {
 
 The event object schema is
 
-+ player : Which remote controller is generating the event.
++ `player` {integer} : Which remote controller is generating the event.
 
-+ code : Enumeration with values:
++ `code` {integer} : Enumeration with values:
 
 	+ ouya.BUTTON.O
 	+ ouya.BUTTON.U
@@ -114,7 +114,7 @@ The event object schema is
 	+ ouya.BUTTON.R[2]
 	+ ouya.BUTTON.R[3]
 
-+ action : Enumeration with values:
++ `action` {integer} : Enumeration with values:
 
 	+ ouya.ACTION.DOWN = Button is pressed down (sent repeatedly)
 	+ ouya.ACTION.UP = Button is released
@@ -128,16 +128,16 @@ See the [main OUYA controller docs](https://devs.ouya.tv/developers/docs/control
 
 The event object schema is
 
-+ player : Which remote controller is generating the event.
++ `player` {integer} : Which remote controller is generating the event.
 
-+ lsx : Left stick x position [-1..0..1]
-+ lsy : Left stick y position [-1..0..1]
++ `lsx` {float} : Left stick x position [-1..0..1]
++ `lsy` {float} : Left stick y position [-1..0..1]
 
-+ rsx : Right stick x position [-1..0..1]
-+ rsy : Right stick y position [-1..0..1]
++ `rsx` {float} : Right stick x position [-1..0..1]
++ `rsy` {float} : Right stick y position [-1..0..1]
 
-+ l2 : Left top button 2 position
-+ r2 : Right top button 2 position
++ `l2` {float} : Left top button 2 position
++ `r2` {float} : Right top button 2 position
 
 See the [main OUYA controller docs](https://devs.ouya.tv/developers/docs/controllers) for more information.
 
