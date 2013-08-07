@@ -52,8 +52,6 @@ var Ouya = Class(function () {
 	};
 
 	this.init = function() {
-		supr(this, 'init', arguments);
-
 		logger.log("{ouya} Installing key listeners");
 
 		NATIVE.events.registerHandler('ouyakey', function(evt) {
