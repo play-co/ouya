@@ -2,7 +2,7 @@ package com.tealeaf.plugin.plugins;
 
 import tv.ouya.console.api.OuyaController;
 import com.tealeaf.EventQueue;
-import com.tealeaf.event.PluginEvent;
+import com.tealeaf.event.Event;
 import com.tealeaf.logger;
 import com.tealeaf.TeaLeaf;
 import com.tealeaf.plugin.IPlugin;
@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import com.tealeaf.TeaLeafGLSurfaceView.PluginKeyHook;
 
 public class OuyaPlugin implements IPlugin, PluginKeyHook {
-    public class OuyaKeyEvent extends com.tealeaf.event.PluginEvent {
+    public class OuyaKeyEvent extends com.tealeaf.event.Event {
         int player, code, action;
 
         public OuyaKeyEvent(int player, int code, int action) {
@@ -27,7 +27,7 @@ public class OuyaPlugin implements IPlugin, PluginKeyHook {
         }
     }
 
-    public class OuyaMotionEvent extends com.tealeaf.event.PluginEvent {
+    public class OuyaMotionEvent extends com.tealeaf.event.Event {
         int player;
         float lsx, lsy, rsx, rsy, l2, r2;
 
