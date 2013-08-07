@@ -5,7 +5,7 @@ var Ouya = Class(function () {
 
 	this.onAnalogInput = function(evt) {
 		logger.log("got OUYA analog event", JSON.stringify(evt));
-	},
+	};
 
 	this.ACTION = {
 		DOWN: 1,
@@ -24,12 +24,18 @@ var Ouya = Class(function () {
 			RIGHT: 22,
 			LEFT: 21
 		},
-		L1: 104,
-		L2: 102,
-		L3: 106,
-		R1: 105,
-		R2: 103,
-		R3: 107
+		L: [
+			0,
+			104,
+			102,
+			106
+		],
+		R: [
+			0,
+			105,
+			103,
+			107
+		]
 	};
 
 	this.AXIS = {
@@ -46,15 +52,22 @@ var Ouya = Class(function () {
 	};
 
 	this.init = function() {
+		supr(this, 'init', arguments);
+
+		logger.log("{ouya} Installing key listeners");
+
 		NATIVE.events.registerHandler('ouyakey', function(evt) {
-			this.onDigitalInput(evt);
+			logger.log("CAT: OUYAKEY", evt);
+			exports.onDigitalInput(evt);
 		});
 
 		NATIVE.events.registerHandler('ouyamotion', function(evt) {
-			this.onAnalogInput(evt);
+			logger.log("CAT: OUYAMOTION", evt);
+			exports.onAnalogInput(evt);
 		});
 	}
 });
 
 exports = new Ouya();
+
 

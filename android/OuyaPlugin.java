@@ -4,6 +4,7 @@ import tv.ouya.console.api.OuyaController;
 import com.tealeaf.EventQueue;
 import com.tealeaf.event.PluginEvent;
 import com.tealeaf.logger;
+import com.tealeaf.TeaLeaf;
 import com.tealeaf.plugin.IPlugin;
 import java.io.*;
 import android.app.Activity;
@@ -12,9 +13,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import com.tealeaf.TeaLeafGLSurfaceView.PluginKeyHook;
 
-public class OuyaPlugin implements IPlugin {
-
+public class OuyaPlugin implements IPlugin, PluginKeyHook {
     public class OuyaKeyEvent extends com.tealeaf.event.PluginEvent {
         int player, code, action;
 
@@ -49,7 +50,8 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onCreate(Activity activity, Bundle savedInstanceState) {
-        logger.log("MAR ON CREATE");
+		logger.log("{ouya} Initializing with activity");
+
         OuyaController.init(activity);
     }
 
@@ -57,6 +59,9 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onStart() {
+		logger.log("{ouya} Hooking controller key events");
+
+		TeaLeaf.get().glView.addPluginKeyHook(this);
     }
 
     public void onPause() {
@@ -66,6 +71,9 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public void onDestroy() {
+		logger.log("{ouya} Un-Hooking controller key events");
+
+		TeaLeaf.get().glView.removePluginKeyHook(this);
     }
 
     public void onNewIntent(Intent intent) {
@@ -74,22 +82,25 @@ public class OuyaPlugin implements IPlugin {
     public void setInstallReferrer(String referrer) {
     }
 
+	@Override
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
-        logger.log("MAR KEY DOWN");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
+		logger.log("CAT: Key Down", keyCode);
         EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 1));
         return true;
     }
 
+	@Override
     public boolean onKeyUp(final int keyCode, KeyEvent event) {
-        logger.log("MAR KEY UP");
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
+		logger.log("CAT: Key Up", keyCode);
         EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 2));
         return true;
     }
 
+	@Override
     public boolean onGenericMotionEvent(final MotionEvent event) {
-        logger.log("MAR MOTION");
+		logger.log("CAT: Motion Event", event.getAxisValue(OuyaController.AXIS_LS_X), event.getAxisValue(OuyaController.AXIS_LS_Y));
         EventQueue.pushEvent(new OuyaMotionEvent(
             OuyaController.getPlayerNumByDeviceId(event.getDeviceId()),
             event.getAxisValue(OuyaController.AXIS_LS_X),
@@ -99,6 +110,7 @@ public class OuyaPlugin implements IPlugin {
             event.getAxisValue(OuyaController.AXIS_L2),
             event.getAxisValue(OuyaController.AXIS_R2)
         ));
+
         return true;
     }
 
@@ -106,9 +118,10 @@ public class OuyaPlugin implements IPlugin {
     }
 
     public boolean consumeOnBackPressed() {
-        return false;
+        return true;
     }
 
     public void onBackPressed() {
     }
 }
+
