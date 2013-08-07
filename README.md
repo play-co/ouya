@@ -4,7 +4,7 @@ The OUYA plugin provides support for the OUYA controller.
 
 ## OUYA Hardware Setup
 
-To install and test games on the OUYA you will need to add a new Vendor ID to your .android/adb_usb.ini file as described in the OUYA documentation and also the (DevKit Android troubleshooting guide)[http://docs.gameclosure.com/native/android-troubleshooting.html].
+To install and test games on the OUYA you will need to add a new Vendor ID to your .android/adb_usb.ini file as described in the OUYA documentation and also the [DevKit Android troubleshooting guide](http://docs.gameclosure.com/native/android-troubleshooting.html).
 
 The Vendor ID for the OUYA is "0x2836".
 
