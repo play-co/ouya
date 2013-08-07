@@ -85,7 +85,6 @@ public class OuyaPlugin implements IPlugin, PluginKeyHook {
 	@Override
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-		logger.log("CAT: Key Down", keyCode);
         EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 1));
         return true;
     }
@@ -93,14 +92,12 @@ public class OuyaPlugin implements IPlugin, PluginKeyHook {
 	@Override
     public boolean onKeyUp(final int keyCode, KeyEvent event) {
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());
-		logger.log("CAT: Key Up", keyCode);
         EventQueue.pushEvent(new OuyaKeyEvent(player, keyCode, 2));
         return true;
     }
 
 	@Override
     public boolean onGenericMotionEvent(final MotionEvent event) {
-		logger.log("CAT: Motion Event", event.getAxisValue(OuyaController.AXIS_LS_X), event.getAxisValue(OuyaController.AXIS_LS_Y));
         EventQueue.pushEvent(new OuyaMotionEvent(
             OuyaController.getPlayerNumByDeviceId(event.getDeviceId()),
             event.getAxisValue(OuyaController.AXIS_LS_X),
