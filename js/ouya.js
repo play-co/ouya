@@ -1,12 +1,4 @@
 var Ouya = Class(function () {
-	this.onDigitalInput = function(evt) {
-		logger.log("got OUYA digital event", JSON.stringify(evt));
-	};
-
-	this.onAnalogInput = function(evt) {
-		logger.log("got OUYA analog event", JSON.stringify(evt));
-	};
-
 	this.ACTION = {
 		DOWN: 1,
 		UP: 2
@@ -38,34 +30,18 @@ var Ouya = Class(function () {
 		]
 	};
 
-	this.AXIS = {
-		LEFT: {
-			X: 0,
-			Y: 1,
-			TRIGGER: 2
-		},
-		RIGHT: {
-			X: 3,
-			Y: 4,
-			TRIGGER: 5
-		}
-	};
-
 	this.init = function() {
 		logger.log("{ouya} Installing key listeners");
 
 		NATIVE.events.registerHandler('ouyakey', function(evt) {
-			logger.log("CAT: OUYAKEY", evt);
-			exports.onDigitalInput(evt);
+			exports.onDigitalInput && exports.onDigitalInput(evt);
 		});
 
 		NATIVE.events.registerHandler('ouyamotion', function(evt) {
-			logger.log("CAT: OUYAMOTION", evt);
-			exports.onAnalogInput(evt);
+			exports.onAnalogInput && exports.onAnalogInput(evt);
 		});
 	}
 });
 
 exports = new Ouya();
-
 
