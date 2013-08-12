@@ -48,7 +48,7 @@ Platformer example project under `devkit/projects/platformer` and also on
 [the Platformer github page](http://github.com/gameclosure/platformer)
 
 When you hold down an "O", "U", "Y", or "A" button on the OUYA controller, it will
-report an ouya.ACTION.DOWN event repeatedly until the key is relased, so you may
+report an ouya.ACTION.DOWN event repeatedly until the key is released, so you may
 want to write code like this to edge-trigger on the key presses:
 
 ~~~
